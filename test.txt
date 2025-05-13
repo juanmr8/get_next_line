@@ -1,0 +1,8 @@
+Hola soy una linea\n
+Adios soy otra lineaaaaaaaaa
+You're on the right track, but there are a few issues with your current implementation
+Process the buffer to find newlines
+Handle the stash (leftover data)
+Return only the current line (up to the first newline)
+Store the rest in stash for the next call
+Keep going - you're making progress!RetryClaude can make mistakes. Please double-check responses.
