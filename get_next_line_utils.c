@@ -3,26 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmora-ro <jmora-ro@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: jmora-ro <jmora-ro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 17:02:37 by jmora-ro          #+#    #+#             */
-/*   Updated: 2025/05/13 17:11:42 by jmora-ro         ###   ########.fr       */
+/*   Updated: 2025/05/27 14:57:37 by jmora-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_strrchr(const char *s, int c)
+char	*ft_strchr(const char *s, int c)
 {
-	int	len;
+	int	i;
 
-	len = 0;
-	while (s[len])
-		len++;
-	while (len >= 0 && s[len] != (char)c)
-		len--;
-	if (len >= 0)
-		return ((char *)&s[len]);
+	i = 0;
+	while (s[i] && s[i] != (char)c)
+		i++;
+	if (s[i] == (char)c)
+		return ((char *)&s[i]);
 	return (0);
 }
 
