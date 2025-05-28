@@ -6,14 +6,14 @@
 /*   By: jmora-ro <jmora-ro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 16:04:27 by jmora-ro          #+#    #+#             */
-/*   Updated: 2025/05/27 17:15:32 by jmora-ro         ###   ########.fr       */
+/*   Updated: 2025/05/28 11:37:42 by jmora-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 5
+#  define BUFFER_SIZE 42
 # endif
 # include <stdlib.h>
 # include <unistd.h>
