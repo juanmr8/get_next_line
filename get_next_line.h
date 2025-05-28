@@ -6,7 +6,7 @@
 /*   By: jmora-ro <jmora-ro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 16:04:27 by jmora-ro          #+#    #+#             */
-/*   Updated: 2025/05/28 11:37:42 by jmora-ro         ###   ########.fr       */
+/*   Updated: 2025/05/28 15:57:20 by jmora-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <fcntl.h>
 # include <stdio.h>
 
-char 	*get_next_line(int fd);
+char	*get_next_line(int fd);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strdup(const char *src);
 size_t	ft_strlen(const char *s);

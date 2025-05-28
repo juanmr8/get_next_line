@@ -1,3 +1,0 @@
-Hola soy una linea
-Adios soy otra lineaaaaaaaa
-You're on the right track, but there are a few issues with your current implementation

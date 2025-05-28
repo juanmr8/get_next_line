@@ -6,13 +6,13 @@
 /*   By: jmora-ro <jmora-ro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 11:41:05 by jmora-ro          #+#    #+#             */
-/*   Updated: 2025/05/28 14:38:02 by jmora-ro         ###   ########.fr       */
+/*   Updated: 2025/05/28 17:07:33 by jmora-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-void	fill_line(char **stash, char *buffer, char **line)
+void	fill_line(char **stash, char **line)
 {
 	char	*newline_pos;
 	int		len_a;
@@ -20,6 +20,11 @@ void	fill_line(char **stash, char *buffer, char **line)
 	char	*temp;
 
 	newline_pos = ft_strchr(*stash, '\n');
+	if (!newline_pos)
+	{
+		*line = NULL;
+		return ;
+	}
 	len_a = newline_pos - *stash;
 	len_b = ft_strlen(*stash) - (len_a + 1);
 	*line = ft_substr(*stash, 0, (len_a + 1));
@@ -30,75 +35,89 @@ void	fill_line(char **stash, char *buffer, char **line)
 
 char	*handle_eof(char **stash, char *buffer, char **line)
 {
-	if (ft_strlen(*stash) > 0)
+	free(buffer);
+	if (*stash && ft_strlen(*stash) > 0)
 	{
-		*line = *stash;
+		*line = ft_strdup(*stash);
+		free(*stash);
 		*stash = NULL;
-		free(buffer);
 		return (*line);
 	}
-	free(buffer);
+	if (*stash)
+	{
+		free(*stash);
+		*stash = NULL;
+	}
 	return (NULL);
+}
+
+int	safe_append(char **stash, char *buffer)
+{
+	char	*temp;
+	char	*new_stash;
+
+	temp = *stash;
+	new_stash = ft_strjoin(*stash, buffer);
+	if (!new_stash)
+	{
+		free(temp);
+		*stash = NULL;
+		return (0);
+	}
+	*stash = new_stash;
+	free(temp);
+	return (1);
 }
 
 int	handle_reading(int fd, char **stash, char **buffer, char **line)
 {
-	char	*temp;
 	int		b_read;
 
-	b_read = 1;
-	while (b_read > 0)
+	while (1)
 	{
 		b_read = read(fd, *buffer, BUFFER_SIZE);
-		*buffer[b_read] = '\0';
-		temp = *stash;
-		*stash = ft_strjoin(*stash, *buffer);
-		if (ft_strchr(stash, '\n'))
+		if (b_read <= 0)
+			break ;
+		(*buffer)[b_read] = '\0';
+		if (!safe_append(stash, *buffer))
+			return (-1);
+		if (ft_strchr(*stash, '\n'))
 		{
-			fill_line(&stash, *buffer, &line);
-			free(*buffer);
-			free(temp);
-			break;
+			fill_line(stash, line);
+			return (1);
 		}
-		free(temp);
 	}
 	return (b_read);
 }
 
-char *get_next_line(int fd)
+char	*get_next_line(int fd)
 {
-	static char *stash;
+	static char	*stash;
 	char		*buffer;
 	int			bytes_read;
-	char		*temp;
 	char		*line;
 
-	bytes_read = 1;
-	buffer = malloc(BUFFER_SIZE + 1);
+	line = NULL;
 	if (stash == NULL)
 		stash = ft_strdup("");
+	if (!stash)
+		return (NULL);
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
+	buffer = malloc(BUFFER_SIZE + 1);
+	if (!buffer)
+		return (NULL);
+	if (ft_strchr(stash, '\n'))
+		return (fill_line(&stash, &line), free(buffer), line);
 	bytes_read = handle_reading(fd, &stash, &buffer, &line);
-/* 	while (bytes_read > 0)
-	{
-		bytes_read = read(fd, buffer, BUFFER_SIZE);
-		buffer[bytes_read] = '\0';
-		temp = stash;
-		stash = ft_strjoin(stash, buffer);
-		if (ft_strchr(stash, '\n'))
-		{
-			fill_line(&stash, buffer, &line);
-			free(buffer);
-			free(temp);
-			break;
-		}
-		free(temp);
-	} */
-	if (bytes_read <= 0)
+	if (bytes_read < 0)
+		return (free(buffer), NULL);
+	if (bytes_read == 0)
 		return (handle_eof(&stash, buffer, &line));
-	return (line);
+	return (free(buffer), (line));
 }
 
-int	main(void)
+/* int	main(void)
 {
     int fd = open("test.txt", O_RDONLY);
     if (fd == -1)
@@ -114,4 +133,4 @@ int	main(void)
     printf("%s", get_next_line(fd));
     close(fd);
     return (0);
-}
+} */
