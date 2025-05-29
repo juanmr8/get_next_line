@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmora-ro <jmora-ro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmora-ro <jmora-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 11:41:05 by jmora-ro          #+#    #+#             */
-/*   Updated: 2025/05/28 17:07:33 by jmora-ro         ###   ########.fr       */
+/*   Updated: 2025/05/29 13:19:21 by jmora-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,12 @@ int	handle_reading(int fd, char **stash, char **buffer, char **line)
 	while (1)
 	{
 		b_read = read(fd, *buffer, BUFFER_SIZE);
+		if (b_read < 0)
+		{
+			free(*stash);
+			*stash = NULL;
+			break ;
+		}
 		if (b_read <= 0)
 			break ;
 		(*buffer)[b_read] = '\0';
@@ -103,7 +109,7 @@ char	*get_next_line(int fd)
 	if (!stash)
 		return (NULL);
 	if (fd < 0 || BUFFER_SIZE <= 0)
-		return (NULL);
+		return (free(stash), stash = NULL, NULL);
 	buffer = malloc(BUFFER_SIZE + 1);
 	if (!buffer)
 		return (NULL);
