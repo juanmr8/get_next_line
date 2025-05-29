@@ -6,7 +6,7 @@
 /*   By: jmora-ro <jmora-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 11:41:05 by jmora-ro          #+#    #+#             */
-/*   Updated: 2025/05/29 13:19:21 by jmora-ro         ###   ########.fr       */
+/*   Updated: 2025/05/29 18:44:31 by jmora-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	safe_append(char **stash, char *buffer)
 
 int	handle_reading(int fd, char **stash, char **buffer, char **line)
 {
-	int		b_read;
+	int	b_read;
 
 	while (1)
 	{
