@@ -6,7 +6,7 @@
 /*   By: jmora-ro <jmora-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 11:41:05 by jmora-ro          #+#    #+#             */
-/*   Updated: 2025/05/29 18:44:31 by jmora-ro         ###   ########.fr       */
+/*   Updated: 2025/06/03 18:45:43 by jmora-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	handle_reading(int fd, char **stash, char **buffer, char **line)
 			*stash = NULL;
 			break ;
 		}
-		if (b_read <= 0)
+		if (b_read == 0)
 			break ;
 		(*buffer)[b_read] = '\0';
 		if (!safe_append(stash, *buffer))
